@@ -34,6 +34,8 @@ const play = (function() {
         else {
             console.log("It's the next player turn")
         }
+
+        players.updateCurrentPlayer(player);
     };
 
     const checkTie = function(boardArr) {
@@ -56,7 +58,7 @@ const play = (function() {
     return {round, checkWin};
 })();
 
-const createPlayers = (function() {
+const players = (function() {
 
     const createPlayer = function(name, token) {
         return {name, token};
@@ -64,8 +66,14 @@ const createPlayers = (function() {
     
     const p1 = createPlayer("P1", "X");
     const p2 = createPlayer("P2", "O");
+    let currentPlayer = "P1";
 
-    return {p1, p2};
+    const updateCurrentPlayer = function(player) { // Used to change player after a round
+        const newPlayer = player === "P1" ? "P2" : "P1";
+        players.currentPlayer = newPlayer;
+    }
+
+    return {p1, p2, currentPlayer, updateCurrentPlayer};
 
 })();
 
@@ -91,3 +99,5 @@ const display = (function(){
     return {reset, update};
 
 })();
+
+display.update(board.getBoard()); //initialize board display
