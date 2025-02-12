@@ -41,3 +41,17 @@ const play = (function() {
 
     return {round, checkWin};
 })();
+
+const createPlayers = (function() {
+
+    const createPlayer = function(name, token) {
+        return {name, token};
+    }
+    
+    const p1 = createPlayer("P1", "X");
+    const p2 = createPlayer("P2", "O");
+
+    return {p1, p2};
+
+})();
+
