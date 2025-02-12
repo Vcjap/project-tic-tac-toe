@@ -92,6 +92,7 @@ const display = (function(){
     let currentBoard = document.querySelector("#board");
     let endDiv = document.querySelector("#endDiv");
     let main = document.querySelector(".main");
+    let message = document.querySelector(".currentPlayer");
 
     const reset = function() {
         currentBoard.replaceChildren();
@@ -134,6 +135,7 @@ const display = (function(){
         newGameBtn.addEventListener("click", ()=> {
             board.reset();
             main.removeChild(endDiv);
+            message.textContent = "";
             display.update(board.getBoard())
         })
 
@@ -142,7 +144,6 @@ const display = (function(){
     }
 
     const currentPlayer = function(player) {
-        let message = document.querySelector(".currentPlayer");
         message.textContent = `It's ${player.name} turn. They play with ${player.token}`
         return message
     };
