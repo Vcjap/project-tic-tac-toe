@@ -69,3 +69,25 @@ const createPlayers = (function() {
 
 })();
 
+const display = (function(){
+
+    const reset = function() {
+        let currentBoard = document.querySelector("#board");
+        currentBoard.replaceChildren();
+    };
+
+    const update = function(boardArr) {
+        let currentBoard = document.querySelector("#board");
+
+        boardArr.forEach((position) => {
+            const newDiv = document.createElement("div");
+            const newBtn = document.createElement("button");
+            newBtn.textContent = position;
+            newDiv.appendChild(newBtn);
+            currentBoard.appendChild(newDiv);
+        });
+    };
+
+    return {reset, update};
+
+})();
