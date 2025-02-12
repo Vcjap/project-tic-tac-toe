@@ -4,7 +4,6 @@ const board = (function() {
     const addToken = function(position, token) {
         if (boardArr[position]==="-") {
             boardArr[position] = token;
-            display.update(boardArr);
         }
         else {
             console.log("ERROR! The position is already taken");
@@ -31,7 +30,10 @@ const play = (function() {
 
         roundResult = play.endRound(boardArr);
 
+        display.update(boardArr);
+
         if (roundResult !== null) display.showEnding(roundResult);
+
     };
 
     const checkTie = function(boardArr) {
@@ -116,6 +118,8 @@ const display = (function(){
             newDiv.appendChild(newBtn);
             currentBoard.appendChild(newDiv);
         });
+
+        display.currentPlayer(players.currentPlayer); //Show the current player 
     };
 
     const showEnding = function(message) {
@@ -137,7 +141,13 @@ const display = (function(){
         main.append(endDiv);
     }
 
-    return {reset, update, showEnding};
+    const currentPlayer = function(player) {
+        let message = document.querySelector(".currentPlayer");
+        message.textContent = `It's ${player.name} turn. They play with ${player.token}`
+        return message
+    };
+
+    return {reset, update, showEnding, currentPlayer};
 
 })();
 
