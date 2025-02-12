@@ -26,20 +26,12 @@ const play = (function() {
     const round = function(position) {
 
         board.addToken(position,players.currentPlayer.token);
+        
+        boardArr = board.getBoard(); //Get the newest board
 
-        boardArr = board.getBoard();
+        roundResult = play.endRound(boardArr);
 
-        if (checkWin(boardArr) === true) {
-            console.log(`${player} wins!`);
-        }
-        else if (checkTie(boardArr) === true) {
-            console.log("It's a tie!")
-        }
-        else {
-            console.log("It's the next player turn")
-            players.updateCurrentPlayer(players.currentPlayer);
-        }
-
+        if (roundResult !== null) display.showEnding(roundResult);
     };
 
     const checkTie = function(boardArr) {
@@ -59,7 +51,20 @@ const play = (function() {
         );
     };
 
-    return {round};
+    const endRound = function(boardArr) {
+        if (checkWin(boardArr) === true) {
+            return (`${players.currentPlayer.name} wins!`);
+        }
+        else if (checkTie(boardArr) === true) {
+            return ("It's a tie!");
+        }
+        else {
+            players.updateCurrentPlayer(players.currentPlayer);
+            return null;
+        }
+    }
+
+    return {round, endRound};
 })();
 
 const players = (function() {
@@ -82,16 +87,15 @@ const players = (function() {
 })();
 
 const display = (function(){
+    let currentBoard = document.querySelector("#board");
+    let body = document.querySelector("body");
 
     const reset = function() {
-        let currentBoard = document.querySelector("#board");
         currentBoard.replaceChildren();
     };
 
     const update = function(boardArr) {
         display.reset();
-        
-        let currentBoard = document.querySelector("#board");
 
         boardArr.forEach((position,index) => {
             const newDiv = document.createElement("div");
@@ -106,7 +110,6 @@ const display = (function(){
                 play.round(position);        
             });
             
-            console.log(position);
             if(position !== "-") newBtn.classList.add("nonClickable"); //Avoid clicks on a "occupied" position
 
             newDiv.appendChild(newBtn);
@@ -114,7 +117,21 @@ const display = (function(){
         });
     };
 
-    return {reset, update};
+    const showEnding = function(message) {
+        finalMessage = document.createElement("h2");
+        finalMessage.textContent = message;
+        
+        newGameBtn = document.createElement("button");
+        newGameBtn.textContent = "Start new Game";
+        newGameBtn.addEventListener("click", ()=> {
+            board.reset();
+            display.update(board.getBoard())
+        })
+
+        body.append(finalMessage,newGameBtn);
+    }
+
+    return {reset, update, showEnding};
 
 })();
 
