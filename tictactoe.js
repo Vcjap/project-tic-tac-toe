@@ -64,12 +64,12 @@ const players = (function() {
         return {name, token};
     }
     
-    const p1 = createPlayer("P1", "X");
-    const p2 = createPlayer("P2", "O");
-    let currentPlayer = "P1";
+    const p1 = createPlayer("p1", "X");
+    const p2 = createPlayer("p2", "O");
+    let currentPlayer = "p1";
 
     const updateCurrentPlayer = function(player) { // Used to change player after a round
-        const newPlayer = player === "P1" ? "P2" : "P1";
+        const newPlayer = player === "p1" ? "p2" : "p1";
         players.currentPlayer = newPlayer;
     }
 
