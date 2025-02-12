@@ -4,8 +4,7 @@ const board = (function() {
     const addToken = function(position, token) {
         if (boardArr[position]==="-") {
             boardArr[position] = token;
-            btn = document.querySelector(`div[board-index='${position}'] button`);
-            btn.textContent = token;
+            display.update(boardArr);
         }
         else {
             console.log("ERROR! The position is already taken");
@@ -38,9 +37,9 @@ const play = (function() {
         }
         else {
             console.log("It's the next player turn")
+            players.updateCurrentPlayer(players.currentPlayer);
         }
 
-        players.updateCurrentPlayer(players.currentPlayer);
     };
 
     const checkTie = function(boardArr) {
@@ -90,11 +89,15 @@ const display = (function(){
     };
 
     const update = function(boardArr) {
+        display.reset();
+        
         let currentBoard = document.querySelector("#board");
 
         boardArr.forEach((position,index) => {
             const newDiv = document.createElement("div");
             const newBtn = document.createElement("button");
+
+            newDiv.setAttribute("board-index", index);
             newBtn.textContent = position;
 
             newBtn.addEventListener("click", (event)=> {
@@ -102,10 +105,11 @@ const display = (function(){
                 position = divTarget.getAttribute("board-index");
                 play.round(position);        
             });
+            
+            console.log(position);
+            if(position !== "-") newBtn.classList.add("nonClickable"); //Avoid clicks on a "occupied" position
 
             newDiv.appendChild(newBtn);
-            newDiv.setAttribute("board-index", index);
-
             currentBoard.appendChild(newDiv);
         });
     };

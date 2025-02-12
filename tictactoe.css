@@ -1,3 +1,7 @@
+html {
+    --nonClickable-btn-background: rgb(183, 183, 183);
+}
+
 body {
     display: flex;
     flex-direction: column;
@@ -16,4 +20,9 @@ body {
 
 #board button {
     background-color: white;
+}
+
+.nonClickable {
+    pointer-events: none;
+    background-color: var(--nonClickable-btn-background);
 }
