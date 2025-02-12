@@ -89,6 +89,7 @@ const players = (function() {
 const display = (function(){
     let currentBoard = document.querySelector("#board");
     let body = document.querySelector("body");
+    let endDiv = document.querySelector(".endDiv");
 
     const reset = function() {
         currentBoard.replaceChildren();
@@ -118,17 +119,22 @@ const display = (function(){
     };
 
     const showEnding = function(message) {
+        endDiv = document.createElement("div");
+        endDiv.classList.add("endDiv");
+
         finalMessage = document.createElement("h2");
         finalMessage.textContent = message;
         
         newGameBtn = document.createElement("button");
         newGameBtn.textContent = "Start new Game";
         newGameBtn.addEventListener("click", ()=> {
+            body.removeChild(endDiv);
             board.reset();
             display.update(board.getBoard())
         })
 
-        body.append(finalMessage,newGameBtn);
+        endDiv.append(finalMessage,newGameBtn);
+        body.appendChild(endDiv);
     }
 
     return {reset, update, showEnding};
