@@ -2,14 +2,19 @@ const board = (function() {
     let boardArr = new Array(9).fill("-");
 
     const addToken = function(position, token) {
-        boardArr[position] === "-" ? boardArr[position] = token : console.log("the position is already taken");
-        console.log(`Current board: ${getBoard()}`);
+        if (boardArr[position]==="-") {
+            boardArr[position] = token;
+            btn = document.querySelector(`div[board-index='${position}'] button`);
+            btn.textContent = token;
+        }
+        else {
+            console.log("ERROR! The position is already taken");
+        }
     };
 
     const reset = function() {
         boardArr = new Array(9).fill("-");
-        console.log("Board reset!");
-        console.log(`Current board: ${getBoard()}`);
+        display.reset();
     };
 
     const getBoard = () => boardArr;
@@ -19,9 +24,9 @@ const board = (function() {
 
 const play = (function() {
 
-    const round = function(player) {
-        const position = prompt("Enter the position as a number");
-        board.addToken(position,player);
+    const round = function(position) {
+
+        board.addToken(position,players.currentPlayer.token);
 
         boardArr = board.getBoard();
 
@@ -55,7 +60,13 @@ const play = (function() {
         );
     };
 
-    return {round, checkWin};
+    const manageClick = function(event) {
+        divTarget = event.target.parentElement;
+        position = divTarget.getAttribute("board-index");
+        play.round(position);
+    };
+
+    return {round, manageClick};
 })();
 
 const players = (function() {
@@ -66,10 +77,10 @@ const players = (function() {
     
     const p1 = createPlayer("p1", "X");
     const p2 = createPlayer("p2", "O");
-    let currentPlayer = "p1";
+    let currentPlayer = p1;
 
     const updateCurrentPlayer = function(player) { // Used to change player after a round
-        const newPlayer = player === "p1" ? "p2" : "p1";
+        const newPlayer = player === p1 ? p2 : p1;
         players.currentPlayer = newPlayer;
     }
 
@@ -87,11 +98,12 @@ const display = (function(){
     const update = function(boardArr) {
         let currentBoard = document.querySelector("#board");
 
-        boardArr.forEach((position) => {
+        boardArr.forEach((position,index) => {
             const newDiv = document.createElement("div");
             const newBtn = document.createElement("button");
             newBtn.textContent = position;
             newDiv.appendChild(newBtn);
+            newDiv.setAttribute("board-index", index);
             currentBoard.appendChild(newDiv);
         });
     };
