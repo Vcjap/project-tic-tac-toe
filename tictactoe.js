@@ -24,7 +24,21 @@ const play = (function() {
         board.addToken(position,player);
 
         boardArr = board.getBoard();
-        checkWin(boardArr) === true ? console.log(`${player} wins!`) : console.log("It's the next player turn");
+
+        if (checkWin(boardArr) === true) {
+            console.log(`${player} wins!`);
+        }
+        else if (checkTie(boardArr) === true) {
+            console.log("It's a tie!")
+        }
+        else {
+            console.log("It's the next player turn")
+        }
+    };
+
+    const checkTie = function(boardArr) {
+        const emptyPosition = boardArr.indexOf("-");
+        return emptyPosition === -1; // If there are no empty positions it's a tie
     };
 
     const checkWin = function(boardArr) {
