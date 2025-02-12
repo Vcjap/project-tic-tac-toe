@@ -40,7 +40,7 @@ const play = (function() {
             console.log("It's the next player turn")
         }
 
-        players.updateCurrentPlayer(player);
+        players.updateCurrentPlayer(players.currentPlayer);
     };
 
     const checkTie = function(boardArr) {
@@ -60,13 +60,7 @@ const play = (function() {
         );
     };
 
-    const manageClick = function(event) {
-        divTarget = event.target.parentElement;
-        position = divTarget.getAttribute("board-index");
-        play.round(position);
-    };
-
-    return {round, manageClick};
+    return {round};
 })();
 
 const players = (function() {
@@ -102,8 +96,16 @@ const display = (function(){
             const newDiv = document.createElement("div");
             const newBtn = document.createElement("button");
             newBtn.textContent = position;
+
+            newBtn.addEventListener("click", (event)=> {
+                divTarget = event.target.parentElement;
+                position = divTarget.getAttribute("board-index");
+                play.round(position);        
+            });
+
             newDiv.appendChild(newBtn);
             newDiv.setAttribute("board-index", index);
+
             currentBoard.appendChild(newDiv);
         });
     };
