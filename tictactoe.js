@@ -139,6 +139,7 @@ const display = (function(){
         
         newGameBtn = document.createElement("button");
         newGameBtn.textContent = "Start New Game";
+        newGameBtn.classList.add("newGameBtn");
         newGameBtn.addEventListener("click", ()=> { // Reset everything and display form
             board.reset();
             main.removeChild(endDiv);
