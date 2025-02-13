@@ -1,6 +1,8 @@
 html {
     --nonClickable-btn-background: rgb(183, 183, 183);
     --newGameBtn-background: rgb(215, 0, 215);
+    --p1color:rgb(255, 187, 0);
+    --p2color: rgb(0, 123, 255);
 }
 
 body {
@@ -23,7 +25,7 @@ body {
 }
 
 #board button {
-    background-color: white;
+    /* background-color: white; */
     flex-grow: 1;
     height:100%;
     min-height: 50px;
@@ -33,6 +35,14 @@ body {
 .nonClickable {
     pointer-events: none;
     background-color: var(--nonClickable-btn-background);
+}
+
+.X {
+    background-color: var(--p1color);
+}
+
+.O {
+    background-color: var(--p2color);
 }
 
 form {

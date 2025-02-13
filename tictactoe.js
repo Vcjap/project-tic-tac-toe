@@ -120,8 +120,11 @@ const display = (function(){
                 position = divTarget.getAttribute("board-index");
                 play.round(position);        
             });
-            
-            if(position !== "-") newBtn.classList.add("nonClickable"); //Avoid clicks on a "occupied" position
+
+            if(position !== "-") {
+                newBtn.classList.add("nonClickable"); //Avoid clicks on a "occupied" position
+                newBtn.classList.add(`${position}`);
+            }; 
 
             newDiv.appendChild(newBtn);
             currentBoard.appendChild(newDiv);
@@ -211,11 +214,13 @@ const form = (function(){
     const startNewGame = function(){
         newP1Name = document.querySelector("#p1").value;
         newP2Name = document.querySelector("#p2").value;
-        players.p1.name = newP1Name;
-        players.p2.name = newP2Name;
-        oldForm = document.querySelector("form");
-        mainBody.removeChild(oldForm);
-        display.update(board.getBoard());
+        if (newP1Name && newP2Name) { // Avoids starting new game if one of the names isn't set 
+            players.p1.name = newP1Name;
+            players.p2.name = newP2Name;
+            oldForm = document.querySelector("form");
+            mainBody.removeChild(oldForm);
+            display.update(board.getBoard());
+        }
     };
 
     return {create, startNewGame};
