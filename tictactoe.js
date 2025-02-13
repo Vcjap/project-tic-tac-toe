@@ -227,5 +227,5 @@ const form = (function(){
 
 })();
 
-// display.update(board.getBoard()); //initialize board display
-form.create();
+
+form.create(); //initialize board display
