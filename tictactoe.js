@@ -204,6 +204,8 @@ const form = (function(){
         newP2Name = document.querySelector("#p2").value;
         players.p1.name = newP1Name;
         players.p2.name = newP2Name;
+        oldForm = document.querySelector("form");
+        mainBody.removeChild(oldForm);
         display.update(board.getBoard());
     };
 
