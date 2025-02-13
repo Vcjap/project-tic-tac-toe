@@ -152,4 +152,64 @@ const display = (function(){
 
 })();
 
-display.update(board.getBoard()); //initialize board display
+const form = (function(){
+    const mainBody = document.querySelector(".main");
+
+    const create = function(){
+
+        const form = document.createElement("form");
+
+        const p1label = document.createElement("label");
+        p1label.setAttribute("for", "p1");
+        p1label.textContent = "Player 1 Name (X):"
+
+        const p1input = document.createElement("input");
+        p1input.setAttribute("type","text");
+        p1input.setAttribute("name", "p1");
+        p1input.setAttribute("id", "p1");
+        p1input.setAttribute("required", "true");
+        p1input.value = players.p1.name;
+
+        const p2label = document.createElement("label");
+        p2label.setAttribute("for", "p2");
+        p2label.textContent = "Player 2 Name (O):"
+
+        const p2input = document.createElement("input");
+        p2input.setAttribute("type","text");
+        p2input.setAttribute("name", "p2");
+        p2input.setAttribute("id", "p2");
+        p2input.setAttribute("required", "true");
+        p2input.value = players.p2.name;
+
+        const newGameBtn = document.createElement("button");
+        newGameBtn.classList.add("newGameBtn");
+        newGameBtn.textContent = "Start New Game";
+        newGameBtn.addEventListener("click", (event)=> {
+            event.preventDefault();
+            startNewGame();
+        });
+
+        form.appendChild(p1label);
+        form.appendChild(p1input);
+        form.appendChild(p2label);
+        form.appendChild(p2input);
+        form.appendChild(newGameBtn);
+
+        mainBody.appendChild(form);
+
+    };
+
+    const startNewGame = function(){
+        newP1Name = document.querySelector("#p1").value;
+        newP2Name = document.querySelector("#p2").value;
+        players.p1.name = newP1Name;
+        players.p2.name = newP2Name;
+        display.update(board.getBoard());
+    };
+
+    return {create, startNewGame};
+
+})();
+
+// display.update(board.getBoard()); //initialize board display
+form.create();
