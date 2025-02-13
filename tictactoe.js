@@ -32,7 +32,14 @@ const play = (function() {
 
         display.update(boardArr);
 
-        if (roundResult !== null) display.showEnding(roundResult);
+        // Manage state when ending conditions are satisfied
+        if (roundResult !== null) { 
+            display.showEnding(roundResult);
+            const boardDisplay = document.querySelector("#board");
+            Array.from(boardDisplay.children).forEach((position) => {
+                position.classList.add("nonClickable");
+            })
+        };
 
     };
 
@@ -132,11 +139,12 @@ const display = (function(){
         
         newGameBtn = document.createElement("button");
         newGameBtn.textContent = "Start New Game";
-        newGameBtn.addEventListener("click", ()=> {
+        newGameBtn.addEventListener("click", ()=> { // Reset everything and display form
             board.reset();
             main.removeChild(endDiv);
-            message.textContent = "";
-            display.update(board.getBoard())
+            currentPlayerMessage = document.querySelector(".currentPlayer");
+            currentPlayerMessage.textContent = "";
+            form.create();
         })
 
         endDiv.append(finalMessage,newGameBtn);
