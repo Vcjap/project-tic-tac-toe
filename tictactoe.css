@@ -26,3 +26,23 @@ body {
     pointer-events: none;
     background-color: var(--nonClickable-btn-background);
 }
+
+form {
+    display: flex;
+    flex-direction: column;
+    border: 3px solid rgb(215, 0, 215);
+    box-shadow: 3px 5px 10px rgb(140, 0, 140);
+    padding: 20px;
+}
+
+form input {
+    margin-bottom: 20px;
+}
+
+form input:invalid {
+    border: 2px solid red;
+}
+
+form input:valid {
+    border: 2px solid green;
+}

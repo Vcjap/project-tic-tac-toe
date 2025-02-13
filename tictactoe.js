@@ -131,7 +131,7 @@ const display = (function(){
         finalMessage.textContent = message;
         
         newGameBtn = document.createElement("button");
-        newGameBtn.textContent = "Start new Game";
+        newGameBtn.textContent = "Start New Game";
         newGameBtn.addEventListener("click", ()=> {
             board.reset();
             main.removeChild(endDiv);
